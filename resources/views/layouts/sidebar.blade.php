@@ -37,7 +37,7 @@
                 <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link active">
+                    <a href="{{ route('dashboard') }}" class="nav-link {{ Route::is('dashboard') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Dashboard
@@ -45,7 +45,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link ">
+                    <a href="{{ route('pekerja.index') }}"
+                        class="nav-link {{ Route::is('pekerja.index') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-users"></i>
                         <p>
                             Pekerja
@@ -53,7 +54,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link ">
+                    <a href="" class="nav-link ">
                         <i class="nav-icon fas fa-money-bill-wave"></i>
                         <p>
                             Kas
@@ -65,6 +66,14 @@
                         <i class="nav-icon fas fa-file"></i>
                         <p>
                             Laporan
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link ">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Pengguna
                         </p>
                     </a>
                 </li>

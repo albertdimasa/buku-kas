@@ -30,7 +30,7 @@
                 <span class="info-box-icon"><i class="fas fa-exclamation"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Belum Membayar</span>
-                    <span class="info-box-number">Rp30.000</span>
+                    <span class="info-box-number">30 Orang</span>
                 </div>
             </div>
         </div>
@@ -39,16 +39,16 @@
     {{-- Elemen 2 --}}
     <div class="card card-indigo">
         <div class="card-header">
-            <h3 class="card-title">Bar Chart</h3>
+            <h3 class="card-title">Kas Tahun Ini</h3>
 
-            <div class="card-tools">
+            {{-- <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
                 </button>
                 <button type="button" class="btn btn-tool" data-card-widget="remove">
                     <i class="fas fa-times"></i>
                 </button>
-            </div>
+            </div> --}}
         </div>
         <div class="card-body">
             <div class="chart">
