@@ -11,16 +11,17 @@
                     {{-- <p class="login-box-msg">Sign in to start your session</p> --}}
                     @if ($errors->any())
                         <div class="alert alert-danger">
+                            <i class="fas fa-times-circle mr-1"></i>
                             Username/Password Salah!!!
                         </div>
                     @endif
                     <form action="{{ route('login') }}" method="post">
                         @csrf
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="username" name="username">
+                            <input type="text" class="form-control" placeholder="Username" name="username">
                             <div class="input-group-append">
                                 <div class="input-group-text">
-                                    <span class="fas fa-envelope"></span>
+                                    <span class="fas fa-user"></span>
                                 </div>
                             </div>
                         </div>
@@ -46,3 +47,8 @@
         </div>
     </div>
 @endsection
+@push('js')
+    <script>
+        $(".alert").delay(2000).fadeOut('slow');
+    </script>
+@endpush
