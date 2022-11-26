@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('pekerjas', function (Blueprint $table) {
             $table->id();
+            $table->string('nama');
+            $table->string('nomor_hp');
+            $table->date('tanggal_bergabung');
             $table->timestamps();
         });
     }

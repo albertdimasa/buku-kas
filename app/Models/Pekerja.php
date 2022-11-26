@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Pekerja extends Model
 {
     use HasFactory;
-    protected $guarded = 'id';
+    protected $guarded = ['id'];
 }

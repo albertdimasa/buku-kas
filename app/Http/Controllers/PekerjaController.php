@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Pekerja;
 use Illuminate\Http\Request;
+use App\Traits\ValidatePekerja;
 
 class PekerjaController extends Controller
 {
+    use ValidatePekerja;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +16,8 @@ class PekerjaController extends Controller
      */
     public function index()
     {
-        return view('admin.pekerja.index');
+        $items = Pekerja::all();
+        return view('admin.pekerja.index', compact('items'));
     }
 
     /**
@@ -35,7 +38,9 @@ class PekerjaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validatePekerja($request);
+        Pekerja::create($request->except('_token'));
+        return redirect()->route('pekerja.index')->with('success', 'Data berhasil ditambahkan');
     }
 
     /**
@@ -69,7 +74,9 @@ class PekerjaController extends Controller
      */
     public function update(Request $request, Pekerja $pekerja)
     {
-        //
+        $this->validatePekerja($request);
+        $pekerja->update($request->except('_token'));
+        return redirect()->route('pekerja.index')->with('success', 'Update data berhasil');
     }
 
     /**
@@ -80,6 +87,7 @@ class PekerjaController extends Controller
      */
     public function destroy(Pekerja $pekerja)
     {
-        //
+        $pekerja->delete();
+        return redirect()->route('pekerja.index')->with('delete', 'Berhasil mengapus data');
     }
 }

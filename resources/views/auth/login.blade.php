@@ -5,10 +5,9 @@
             <!-- /.login-logo -->
             <div class="card card-outline card-primary">
                 <div class="card-header text-center">
-                    <a href="../../index2.html" class="h1"><b>Admin</b>LTE</a>
+                    <a href="../../index2.html" class="h1"><b>Buku</b>KAS</a>
                 </div>
                 <div class="card-body">
-                    {{-- <p class="login-box-msg">Sign in to start your session</p> --}}
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <i class="fas fa-times-circle mr-1"></i>
