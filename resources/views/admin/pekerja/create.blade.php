@@ -5,13 +5,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="createPekerjaLabel">Tambah Pekerja</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
             <div class="modal-body">
                 <form action="{{ route('pekerja.store') }}" method="post">
                     @csrf
+                    <div class="mb-3">
+                        <label for="InputNama" class="form-label">ID Absen</label>
+                        <input type="text" class="form-control" name="id_absen" required>
+                    </div>
                     <div class="mb-3">
                         <label for="InputNama" class="form-label">Nama</label>
                         <input type="text" class="form-control" name="nama" required>
@@ -24,7 +25,10 @@
                         <label for="InputTanggalBergabung" class="form-label">Tanggal Bergabung</label>
                         <input type="date" class="form-control" name="tanggal_bergabung" required>
                     </div>
-                    <button type="submit" class="btn btn-primary d-block ml-auto">Submit</button>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-secondary mr-1" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
                 </form>
             </div>
         </div>

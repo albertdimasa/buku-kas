@@ -53,13 +53,25 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="" class="nav-link ">
+                <li class="nav-item {{ Route::is('pembayaran.index') ? 'menu-is-opening menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ Route::is('pembayaran.index') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-money-bill-wave"></i>
                         <p>
                             Kas
+                            <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('pembayaran.index') }}"
+                                class="nav-link {{ Route::is('pembayaran.index') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-money-bill-wave"></i>
+                                <p>
+                                    Pembayaran
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link ">

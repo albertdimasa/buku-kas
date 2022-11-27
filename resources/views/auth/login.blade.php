@@ -5,7 +5,7 @@
             <!-- /.login-logo -->
             <div class="card card-outline card-primary">
                 <div class="card-header text-center">
-                    <a href="../../index2.html" class="h1"><b>Buku</b>KAS</a>
+                    <h1 class="my-0"><b>Buku</b>KAS</h5>
                 </div>
                 <div class="card-body">
                     @if ($errors->any())

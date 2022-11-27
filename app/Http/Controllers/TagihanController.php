@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pekerja;
+use App\Models\Tagihan;
 use Illuminate\Http\Request;
-use App\Traits\ValidateInput;
 
-class PekerjaController extends Controller
+class TagihanController extends Controller
 {
-    use ValidateInput;
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +14,7 @@ class PekerjaController extends Controller
      */
     public function index()
     {
-        $items = Pekerja::all();
-        return view('admin.pekerja.index', compact('items'));
+        //
     }
 
     /**
@@ -38,18 +35,16 @@ class PekerjaController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validatePekerja($request);
-        Pekerja::create($request->except('_token'));
-        return redirect()->route('pekerja.index')->with('success', 'Data berhasil ditambahkan');
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Pekerja  $pekerja
+     * @param  \App\Models\Tagihan  $tagihan
      * @return \Illuminate\Http\Response
      */
-    public function show(Pekerja $pekerja)
+    public function show(Tagihan $tagihan)
     {
         //
     }
@@ -57,10 +52,10 @@ class PekerjaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Pekerja  $pekerja
+     * @param  \App\Models\Tagihan  $tagihan
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pekerja $pekerja)
+    public function edit(Tagihan $tagihan)
     {
         //
     }
@@ -69,25 +64,22 @@ class PekerjaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Pekerja  $pekerja
+     * @param  \App\Models\Tagihan  $tagihan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pekerja $pekerja)
+    public function update(Request $request, Tagihan $tagihan)
     {
-        $this->validatePekerja($request);
-        $pekerja->update($request->except('_token'));
-        return redirect()->route('pekerja.index')->with('success', 'Update data berhasil');
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Pekerja  $pekerja
+     * @param  \App\Models\Tagihan  $tagihan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pekerja $pekerja)
+    public function destroy(Tagihan $tagihan)
     {
-        $pekerja->delete();
-        return redirect()->route('pekerja.index')->with('delete', 'Berhasil mengapus data');
+        //
     }
 }

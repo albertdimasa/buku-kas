@@ -13,12 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pekerjas', function (Blueprint $table) {
+        Schema::create('pembayarans', function (Blueprint $table) {
             $table->id();
-            $table->string('id_absen')->unique();
+            $table->string('id_absen');
             $table->string('nama');
-            $table->string('nomor_hp');
-            $table->date('tanggal_bergabung');
+            $table->date('tanggal');
+            $table->string('tagihan'); // Diisi otomatis sesuai tagihan bulan tersebut
+            $table->string('bulan');
+            $table->string('tahun');
+            $table->string('nominal');
+            $table->string('bukti')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pekerjas');
+        Schema::dropIfExists('kas');
     }
 };

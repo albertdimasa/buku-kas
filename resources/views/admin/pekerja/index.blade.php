@@ -14,6 +14,7 @@
             <thead>
                 <tr>
                     <th>No</th>
+                    <th>ID Absen</th>
                     <th>Nama</th>
                     <th>Nomor Hp</th>
                     <th>Tanggal Bergabung</th>
@@ -24,6 +25,7 @@
                 @forelse ($items as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
+                        <td>{{ $item->id_absen }}</td>
                         <td>{{ $item->nama }}</td>
                         <td>{{ $item->nomor_hp }}</td>
                         <td>{{ $item->tanggal_bergabung }}</td>
