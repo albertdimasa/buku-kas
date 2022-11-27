@@ -15,6 +15,13 @@
                 // "info": true,
                 "autoWidth": false,
                 "responsive": true,
+
+            });
+
+            $('#table2').DataTable({
+                "responsive": true,
+                "scrollY": '200px',
+                "scrollCollapse": true,
             });
         })
     </script>

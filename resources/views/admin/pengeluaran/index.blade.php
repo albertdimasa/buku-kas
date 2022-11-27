@@ -1,9 +1,8 @@
 @extends('layouts.master')
 @section('title')
-    Pembayaran
+    Pengeluaran
 @stop
 @section('content')
-    {{-- Elemen 1 --}}
     @include('admin.pembayaran.card')
     <div class="card p-2">
         <button type="button" class="btn btn-primary btn-sm d-block my-2 ml-auto" data-toggle="modal"
@@ -41,38 +40,17 @@
                             </a>
                         </td>
                         <td>
+                            {{-- <button class="btn btn-sm btn-primary" data-toggle="modal"
+                                data-target="#editPembayaran-{{ $item->id }}">
+                                <i class="fas fa-edit"></i>
+                            </button> --}}
                             <button class="btn btn-sm btn-danger" data-toggle="modal"
                                 data-target="#deletePembayaran-{{ $item->id }}">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
+                            {{-- @include('admin.pembayaran.edit') --}}
                             @include('admin.pembayaran.delete')
                         </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-
-    {{-- Elemen 2 --}}
-    <div class="card p-2">
-        <button class="btn btn-danger py-3 my-2 text-bold text-uppercase">
-            <i class="fas fa-exclamation mr-2"></i>
-            Ada {{ $pekerja_belum_bayar }} Orang yang belum membayar pada Bulan
-            {{ now()->subMonth()->isoFormat('MMMM Y') }}
-            <i class="fas fa-exclamation ml-2"></i>
-        </button>
-        <table id="table2" class="table table-bordered table-hover bg-white">
-            <thead>
-                <tr>
-                    <th>ID Absen</th>
-                    <th>Nama</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($pekerja as $item)
-                    <tr>
-                        <td>{{ $item->id_absen }}</td>
-                        <td class="text-capitalize">{{ $item->nama }}</td>
                     </tr>
                 @endforeach
             </tbody>

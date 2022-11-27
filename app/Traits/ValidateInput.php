@@ -17,6 +17,15 @@ trait ValidateInput
         ]);
     }
 
+    public function validateTagihan($request)
+    {
+        return $this->validate($request, [
+            'nominal'           => 'required',
+            'bulan'             => 'required',
+            'tahun'             => 'required|numeric',
+        ]);
+    }
+
     public function validatePembayaran($request)
     {
         return $this->validate($request, [

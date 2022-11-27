@@ -11,36 +11,23 @@ use Illuminate\Support\Facades\File;
 class PembayaranController extends Controller
 {
     use ValidateInput;
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        $items      = Pembayaran::latest()->get();
-        $pekerja    = Pekerja::select('id_absen', 'nama')->get();
-        $bulan      = array('Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember');
-        // $belum_bayar = Pembayaran    
-        return view('admin.pembayaran.index', compact('items', 'pekerja', 'bulan'));
+        $items   = Pembayaran::latest()->get();
+        $pekerja = Pekerja::select('id_absen', 'nama')->get();
+        $bulan   = array('Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember');
+
+        $total_bulan_ini     = Pembayaran::where('bulan', now()->subMonth()->isoFormat('MMMM'))->sum('nominal');
+        $pekerja_belum_bayar = Pekerja::whereNotIn('id_absen', Pembayaran::where('bulan', date('F'))->pluck('id_absen'))->count();
+        return view('admin.pembayaran.index', compact('items', 'pekerja', 'bulan', 'total_bulan_ini', 'pekerja_belum_bayar'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request['nama']    = Pekerja::where('id_absen', $request->id_absen)->first()->nama; // Mendapatkan nama berdasar id absen
@@ -75,50 +62,30 @@ class PembayaranController extends Controller
         return redirect()->route('pembayaran.index')->with('success', 'Pembayaran berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Pembayaran  $Pembayaran
-     * @return \Illuminate\Http\Response
-     */
     public function show(Pembayaran $pembayaran)
     {
         dd($pembayaran);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Pembayaran  $Pembayaran
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Pembayaran $Pembayaran)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Pembayaran  $Pembayaran
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Pembayaran $Pembayaran)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Pembayaran  $Pembayaran
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Pembayaran $pembayaran)
     {
         $pembayaran->delete();
         File::delete(public_path('storage/bukti_pembayaran/' . $pembayaran->bukti));
         return redirect()->route('pembayaran.index')->with('delete', 'Pembayaran berhasil dihapus');
+    }
+
+    public function out_index()
+    {
+        return view('admin.pengeluaran.index');
     }
 }

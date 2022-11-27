@@ -11,8 +11,8 @@
             <div class="info-box bg-gradient-warning">
                 <span class="info-box-icon"><i class="fas fa-users"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Pekerja</span>
-                    <span class="info-box-number">150</span>
+                    <span class="info-box-text">Total Pekerja</span>
+                    <span class="info-box-number">{{ $pekerja }} Orang</span>
                 </div>
             </div>
         </div>
@@ -20,8 +20,8 @@
             <div class="info-box bg-gradient-success">
                 <span class="info-box-icon"><i class="fas fa-money-bill-wave"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Kas Bulan Ini</span>
-                    <span class="info-box-number">Rp30.000</span>
+                    <span class="info-box-text">Total Pemasukan Kas</span>
+                    <span class="info-box-number">Rp. @rupiah($total_pemasukan)</span>
                 </div>
             </div>
         </div>
@@ -29,8 +29,8 @@
             <div class="info-box bg-gradient-danger">
                 <span class="info-box-icon"><i class="fas fa-exclamation"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Belum Membayar</span>
-                    <span class="info-box-number">30 Orang</span>
+                    <span class="info-box-text">Total Pengeluaran</span>
+                    {{-- <span class="info-box-number">30 Orang</span> --}}
                 </div>
             </div>
         </div>
@@ -67,8 +67,8 @@
         $(function() {
 
             var areaChartData = {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'Agustus',
-                    'September'
+                labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus',
+                    'September', 'Oktober', 'November', 'Desember'
                 ],
                 datasets: [{
                         label: 'Pemasukan',
@@ -79,7 +79,7 @@
                         pointStrokeColor: 'rgba(60,141,188,1)',
                         pointHighlightFill: '#fff',
                         pointHighlightStroke: 'rgba(60,141,188,1)',
-                        data: [28, 48, 40, 19, 86, 27, 90, 30, 20]
+                        data: {!! json_encode($chart_pemasukan) !!}
                     },
                     {
                         label: 'Pengeluaran',
@@ -90,7 +90,7 @@
                         pointStrokeColor: '#c1c7d1',
                         pointHighlightFill: '#fff',
                         pointHighlightStroke: 'rgba(220,220,220,1)',
-                        data: [65, 59, 80, 81, 56, 55, 40, 120, 190]
+                        // data: {!! json_encode($chart_pemasukan) !!}
                     },
                 ]
             }

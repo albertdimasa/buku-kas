@@ -16,7 +16,7 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <!-- Navbar Search -->
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link" data-widget="navbar-search" href="#" role="button">
                 <i class="fas fa-search"></i>
             </a>
@@ -122,12 +122,13 @@
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
             </div>
-        </li>
+        </li> --}}
         <li class="nav-item">
             <form action="{{ route('logout') }}" method="post" id="formLogout">
                 @csrf
-                <a class="nav-link" onclick="document.getElementById('formLogout').submit();">
-                    <i class="fas fa-sign-out-alt" style="cursor: pointer"></i>
+                <a class="nav-link" onclick="document.getElementById('formLogout').submit();"
+                    style="cursor: pointer;">Log Out
+                    <i class="fas fa-sign-out-alt ml-1"></i>
                 </a>
             </form>
             {{-- <a class="nav-link" data-widget="fullscreen" href="#" role="button">

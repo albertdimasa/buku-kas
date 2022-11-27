@@ -53,7 +53,8 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item {{ Route::is('pembayaran.index') ? 'menu-is-opening menu-open' : '' }}">
+                <li
+                    class="nav-item {{ Route::is('pembayaran.index') | Route::is('pengeluaran.index') | Route::is('tagihan.index') ? 'menu-is-opening menu-open' : '' }}">
                     <a href="#" class="nav-link {{ Route::is('pembayaran.index') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-money-bill-wave"></i>
                         <p>
@@ -65,9 +66,27 @@
                         <li class="nav-item">
                             <a href="{{ route('pembayaran.index') }}"
                                 class="nav-link {{ Route::is('pembayaran.index') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-money-bill-wave"></i>
+                                <i class="nav-icon fas fa-donate"></i>
                                 <p>
                                     Pembayaran
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('pengeluaran.index') }}"
+                                class="nav-link {{ Route::is('pengeluaran.index') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-gift"></i>
+                                <p>
+                                    Pengeluaran
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('tagihan.index') }}"
+                                class="nav-link {{ Route::is('tagihan.index') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-bell"></i>
+                                <p>
+                                    Tagihan
                                 </p>
                             </a>
                         </li>

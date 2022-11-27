@@ -43,7 +43,7 @@
                                 <select class="form-control select2" name="bulan" required>
                                     @for ($i = 0; $i < count($bulan); $i++)
                                         <option value="{{ $bulan[$i] }}"
-                                            @if (date('F') == $bulan[$i]) selected @endif>
+                                            @if (now()->subMonth()->isoFormat('MMMM') == $bulan[$i]) selected @endif>
                                             {{ $bulan[$i] }}
                                         </option>
                                     @endfor
