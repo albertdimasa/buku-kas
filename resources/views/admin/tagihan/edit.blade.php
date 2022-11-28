@@ -1,38 +1,40 @@
 <!-- Edit Modal -->
-<div class="modal fade" id="editPekerja-{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="editPekerjaLabel"
+<div class="modal fade" id="editTagihan-{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="editTagihanLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editPekerjaLabel">Edit Pekerja</h5>
+                <h5 class="modal-title" id="editTagihanLabel">Edit Tagihan</h5>
             </div>
             <div class="modal-body">
-                <form action="{{ route('pekerja.update', $item) }}" method="post">
+                <form action="{{ route('tagihan.update', $item) }}" method="post">
                     @method('put')
                     @csrf
                     <div class="mb-3">
-                        <label for="InputNama" class="form-label">ID Absen</label>
-                        <input type="text" class="form-control" name="id_absen" value="{{ $item->id_absen }}"
-                            required>
+                        <label for="InputNominal" class="form-label">Nominal</label>
+                        <input type="text" class="form-control" name="nominal" id="rupiah"
+                            value="{{ $item->nominal }}" required>
                     </div>
                     <div class="mb-3">
-                        <label for="InputNama" class="form-label">Nama</label>
-                        <input type="text" class="form-control" name="nama" value="{{ $item->nama }}" required>
+                        <label for="InputNama" class="form-label">Bulan</label>
+                        <select class="form-control select2" name="bulan" required>
+                            @for ($i = 0; $i < count($bulan); $i++)
+                                <option value="{{ $bulan[$i] }}" {{ $bulan[$i] == $item->bulan ? 'selected' : '' }}>
+                                    {{ $bulan[$i] }}
+                                </option>
+                            @endfor
+                        </select>
                     </div>
                     <div class="mb-3">
-                        <label for="InputNomorHp" class="form-label">Nomor Hp</label>
-                        <input type="number" class="form-control" name="nomor_hp" value="{{ $item->nomor_hp }}"
-                            required>
+                        <label for="InputNomorHp" class="form-label">Tahun</label>
+                        <input type="number" class="form-control" name="tahun" value="{{ $item->tahun }}" required>
                     </div>
                     <div class="mb-3">
-                        <label for="InputTanggalBergabung" class="form-label">Tanggal Bergabung</label>
-                        <input type="date" class="form-control" name="tanggal_bergabung"
-                            value="{{ $item->tanggal_bergabung }}" required>
+                        <label for="InputTanggalBergabung" class="form-label">Catatan <span
+                                class="text-secondary">(Optional)</span></label>
+                        <input type="text" class="form-control" name="catatan" value="{{ $item->catatan }}">
                     </div>
-                    <div class="d-flex justify-content-end">
-                        <button class="btn btn-secondary mr-1" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
+                    @include('admin.components.button', ['submit' => 'submit', 'close' => 'close'])
                 </form>
             </div>
         </div>

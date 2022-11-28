@@ -11,10 +11,7 @@
                     @method('delete')
                     @csrf
                     <p>Anda yakin ingin menghapus <strong>{{ $item->nama }}</strong></p>
-                    <div class="d-flex justify-content-end">
-                        <button class="btn btn-secondary mr-1" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-primary ">Yakin</button>
-                    </div>
+                    @include('admin.components.button', ['submit' => 'yakin', 'close' => 'tutup'])
                 </form>
             </div>
         </div>

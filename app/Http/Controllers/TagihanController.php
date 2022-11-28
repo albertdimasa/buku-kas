@@ -4,94 +4,87 @@ namespace App\Http\Controllers;
 
 use App\Models\Tagihan;
 use App\Traits\ValidateInput;
+use App\Traits\Convert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TagihanController extends Controller
 {
     use ValidateInput;
+    use Convert;
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $items = Tagihan::all();
+        $items = Tagihan::latest()->get();
         $bulan   = array('Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember');
 
         return view('admin.tagihan.index', compact('items', 'bulan'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function check($request)
+    {
+        // Validasi dan convert nominal
+        $this->validateTagihan($request);
+        $this->convertNominal($request);
+
+        // Menyimpan user yang sedang login
+        $request['created_by'] = Auth::user()->name;
+    }
+
     public function store(Request $request)
     {
-        $this->validateTagihan($request);
-        $request['created_by'] = Auth::user()->name;
-        $request['nominal']    = preg_replace('/\h*\.+\h*(?!.*\.)/', '', $request->nominal); // Menghilangkan dots.
-        $request['nominal']    = preg_replace('/Rp./', '', $request->nominal); // Menghilangkan Rp. 
+        // Cek apakah data double
+        $data = Tagihan::where([
+            ['bulan', $request->bulan],
+            ['tahun', $request->tahun],
+        ])->count();
+
+        if ($data > 0) {
+            return redirect()->route('tagihan.index')->with('delete', "Tagihan {$request->bulan} {$request->tahun} telah ada");
+        }
+
+        $this->check($request);
+
         Tagihan::create($request->except('_token'));
         return redirect()->route('tagihan.index')->with('success', 'Data berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Tagihan  $tagihan
-     * @return \Illuminate\Http\Response
-     */
     public function show(Tagihan $tagihan)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Tagihan  $tagihan
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Tagihan $tagihan)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tagihan  $tagihan
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Tagihan $tagihan)
     {
-        //
+        // Cek apakah data double
+        $data = Tagihan::where([
+            ['bulan', $request->bulan],
+            ['tahun', $request->tahun],
+        ])->count();
+
+        if ($data > 0) {
+            return redirect()->route('tagihan.index')->with('delete', "Tagihan {$request->bulan} {$request->tahun} telah ada");
+        }
+
+        $this->check($request);
+
+        $tagihan->update($request->except('_token'));
+        return redirect()->route('tagihan.index')->with('success', 'Data berhasil diupdate');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Tagihan  $tagihan
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Tagihan $tagihan)
     {
-        //
+        $tagihan->delete();
+        return redirect()->route('tagihan.index')->with('delete', 'Tagihan berhasil dihapus');
     }
 }

@@ -32,10 +32,7 @@
                                 class="text-secondary">(Optional)</span></label>
                         <input type="text" class="form-control" name="catatan">
                     </div>
-                    <div class="d-flex justify-content-end">
-                        <button class="btn btn-secondary mr-1" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
+                    @include('admin.components.button', ['submit' => 'submit', 'close' => 'close'])
                 </form>
             </div>
         </div>

@@ -25,10 +25,7 @@
                         <label for="InputTanggalBergabung" class="form-label">Tanggal Bergabung</label>
                         <input type="date" class="form-control" name="tanggal_bergabung" required>
                     </div>
-                    <div class="d-flex justify-content-end">
-                        <button class="btn btn-secondary mr-1" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
+                    @include('admin.components.button', ['submit' => 'submit', 'close' => 'close'])
                 </form>
             </div>
         </div>

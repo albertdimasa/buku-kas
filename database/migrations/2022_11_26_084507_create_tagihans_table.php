@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('bulan');
             $table->string('tahun');
             $table->string('catatan')->nullable();
-            $table->string('created_by');
+            $table->string('created_by')->nullable();
             $table->timestamps();
         });
     }

@@ -7,6 +7,18 @@
                 <h5 class="modal-title" id="createPembayaranLabel">Masukkan Pembayaran</h5>
             </div>
             <div class="modal-body">
+                @if ($tagihan == 0)
+                    <div class="info-box bg-gradient-danger">
+                        <span class="info-box-icon"><i class="fas fa-exclamation"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Tagihan bulan
+                                {{ now()->subMonth()->isoFormat('MMMM Y') }} belum ada</span>
+                            <span class="info-box-number"><a href="{{ route('tagihan.index') }}"
+                                    style="color: white">Klik disini untuk
+                                    mengisi</a></span>
+                        </div>
+                    </div>
+                @endif
                 <form action="{{ route('pembayaran.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
@@ -22,13 +34,13 @@
                         <div class="row">
                             <div class="col">
                                 <label for="InputTagihan" class="form-label">Tagihan</label>
-                                <input type="number" class="form-control" name="tagihan" value="@rupiah(20000)"
+                                <input type="number" class="form-control" name="tagihan" value="@rupiah($tagihan)"
                                     readonly required>
                             </div>
                             <div class="col">
                                 <label for="InputNominal" class="form-label">Nominal</label>
                                 <input type="text" class="form-control" name="nominal" id="rupiah"
-                                    value="@rupiah(20000)" required>
+                                    value="@rupiah($tagihan)" required>
                             </div>
                         </div>
                     </div>
@@ -61,10 +73,7 @@
                         <input type="file" class="form-control" name="bukti"
                             accept="image/png, image/jpeg, image/jpg" required>
                     </div>
-                    <div class="d-flex justify-content-end">
-                        <button class="btn btn-secondary mr-1" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
+                    @include('admin.components.button', ['submit' => 'submit', 'close' => 'close'])
                 </form>
             </div>
         </div>

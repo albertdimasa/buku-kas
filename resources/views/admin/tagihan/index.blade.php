@@ -10,7 +10,6 @@
         </button>
         @include('admin.tagihan.create')
         @include('admin.function.alert')
-        @include('admin.function.rupiah')
         <table id="table" class="table table-bordered table-hover bg-white">
             <thead>
                 <tr>
@@ -34,15 +33,15 @@
                         <td>{{ $item->created_by }}</td>
                         <td>
                             <button class="btn btn-sm btn-primary" data-toggle="modal"
-                                data-target="#editPekerja-{{ $item->id }}">
+                                data-target="#editTagihan-{{ $item->id }}">
                                 <i class="fas fa-edit"></i>
                             </button>
                             <button class="btn btn-sm btn-danger" data-toggle="modal"
-                                data-target="#deletePekerja-{{ $item->id }}">
+                                data-target="#deleteTagihan-{{ $item->id }}">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
-                            @include('admin.pekerja.edit')
-                            @include('admin.pekerja.delete')
+                            @include('admin.tagihan.edit')
+                            @include('admin.tagihan.delete')
                         </td>
                     </tr>
                 @empty
@@ -54,3 +53,4 @@
 
 @include('admin.function.datatables')
 @include('admin.function.alert-hide')
+@include('admin.function.rupiah')

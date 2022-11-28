@@ -1,20 +1,19 @@
 <!-- Create Modal -->
-<div class="modal fade" id="deletePekerja-{{ $item->id }}" tabindex="-1" role="dialog"
-    aria-labelledby="deletePekerjaLabel" aria-hidden="true">
+<div class="modal fade" id="deleteTagihan-{{ $item->id }}" tabindex="-1" role="dialog"
+    aria-labelledby="deleteTagihanLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deletePekerjaLabel">Delete Pekerja</h5>
+                <h5 class="modal-title" id="deleteTagihanLabel">Delete Tagihan</h5>
             </div>
             <div class="modal-body">
-                <form action="{{ route('pekerja.destroy', $item) }}" method="post">
+                <form action="{{ route('tagihan.destroy', $item) }}" method="post">
                     @method('delete')
                     @csrf
-                    <p>Anda yakin ingin menghapus <strong>{{ $item->nama }}</strong></p>
-                    <div class="d-flex justify-content-end">
-                        <button class="btn btn-secondary mr-1" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-primary ">Yakin</button>
-                    </div>
+                    <p>Anda yakin ingin menghapus Tagihan Bulan <strong>{{ $item->bulan }} {{ $item->tahun }}</strong>
+                        dengan nominal <strong>@rupiah($item->nominal)</strong>
+                    </p>
+                    @include('admin.components.button', ['submit' => 'yakin', 'close' => 'tidak'])
                 </form>
             </div>
         </div>
