@@ -54,9 +54,9 @@
                     </a>
                 </li>
                 <li
-                    class="nav-item {{ Route::is('pembayaran.index') | Route::is('tagihan.index') ? 'menu-is-opening menu-open' : '' }} ">
+                    class="nav-item {{ Route::is('pembayaran.index') | Route::is('tagihan.index') | Route::is('pengeluaran.index') ? 'menu-is-opening menu-open' : '' }} ">
                     <a href="#"
-                        class="nav-link {{ Route::is('pembayaran.index') | Route::is('tagihan.index') ? 'active' : '' }}">
+                        class="nav-link {{ Route::is('pembayaran.index') | Route::is('tagihan.index') | Route::is('pengeluaran.index') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-money-bill-wave"></i>
                         <p>
                             Kas
@@ -69,7 +69,7 @@
                                 class="nav-link {{ Route::is('pembayaran.index') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-donate"></i>
                                 <p>
-                                    Pembayaran
+                                    Pemasukan
                                 </p>
                             </a>
                         </li>

@@ -7,7 +7,7 @@
 @section('content')
     {{-- Elemen 1 --}}
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="info-box bg-gradient-warning">
                 <span class="info-box-icon"><i class="fas fa-users"></i></span>
                 <div class="info-box-content">
@@ -16,21 +16,30 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
+            <div class="info-box bg-gradient-info">
+                <span class="info-box-icon"><i class="fas fa-exclamation"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Total Saldo</span>
+                    <span class="info-box-number">Rp. @rupiah($saldo)</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
             <div class="info-box bg-gradient-success">
                 <span class="info-box-icon"><i class="fas fa-money-bill-wave"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Total Pemasukan Kas</span>
+                    <span class="info-box-text">Pemasukan Kas</span>
                     <span class="info-box-number">Rp. @rupiah($total_pemasukan)</span>
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="info-box bg-gradient-danger">
                 <span class="info-box-icon"><i class="fas fa-exclamation"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Total Pengeluaran</span>
-                    {{-- <span class="info-box-number">30 Orang</span> --}}
+                    <span class="info-box-text">Pengeluaran Kas</span>
+                    <span class="info-box-number">Rp. @rupiah($total_pengeluaran)</span>
                 </div>
             </div>
         </div>
@@ -90,7 +99,7 @@
                         pointStrokeColor: '#c1c7d1',
                         pointHighlightFill: '#fff',
                         pointHighlightStroke: 'rgba(220,220,220,1)',
-                        // data: {!! json_encode($chart_pemasukan) !!}
+                        data: {!! json_encode($chart_pengeluaran) !!}
                     },
                 ]
             }

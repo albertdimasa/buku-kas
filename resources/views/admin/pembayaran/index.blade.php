@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Pembayaran
+    Pemasukan
 @stop
 @section('content')
     {{-- Elemen 1 --}}
@@ -8,7 +8,7 @@
     <div class="card p-2">
         <button type="button" class="btn btn-primary btn-sm d-block my-2 ml-auto" data-toggle="modal"
             data-target="#createPembayaran">
-            Masukkan Pembayaran
+            Masukkan Pemasukan
         </button>
         @include('admin.pembayaran.create')
         @include('admin.function.alert')
@@ -32,7 +32,7 @@
                         <td class="text-capitalize">{{ $item->nama }}</td>
                         <td>@rupiah($item->tagihan)</td>
                         <td>@rupiah($item->nominal)</td>
-                        <td>{{ $item->tanggal }}</td>
+                        <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d F Y') }}</td>
                         <td>{{ $item->bulan }}</td>
                         <td>
                             <a href="{{ asset('storage/bukti_pembayaran/' . $item->bukti) }}" type="button"

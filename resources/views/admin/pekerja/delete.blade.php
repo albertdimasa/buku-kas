@@ -10,7 +10,7 @@
                 <form action="{{ route('pekerja.destroy', $item) }}" method="post">
                     @method('delete')
                     @csrf
-                    <p>Anda yakin ingin menghapus <strong>{{ $item->nama }}</strong></p>
+                    <p>Anda yakin ingin menghapus <strong>{{ $item->nama }}</strong>?</p>
                     @include('admin.components.button', ['submit' => 'yakin', 'close' => 'tutup'])
                 </form>
             </div>

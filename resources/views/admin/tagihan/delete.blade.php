@@ -11,7 +11,7 @@
                     @method('delete')
                     @csrf
                     <p>Anda yakin ingin menghapus Tagihan Bulan <strong>{{ $item->bulan }} {{ $item->tahun }}</strong>
-                        dengan nominal <strong>@rupiah($item->nominal)</strong>
+                        dengan nominal <strong>@rupiah($item->nominal)?</strong>
                     </p>
                     @include('admin.components.button', ['submit' => 'yakin', 'close' => 'tidak'])
                 </form>

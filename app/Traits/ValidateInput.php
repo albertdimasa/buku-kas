@@ -38,4 +38,14 @@ trait ValidateInput
             'bukti'     => 'required|image|mimes:png,jpg,jpeg',
         ]);
     }
+
+    public function validatePengeluaran($request)
+    {
+        return $this->validate($request, [
+            'nama'      => 'required',
+            'nominal'   => 'required',
+            'bukti'     => 'required|image|mimes:png,jpg,jpeg',
+            'tanggal'   => 'required'
+        ]);
+    }
 }

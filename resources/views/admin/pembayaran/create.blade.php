@@ -4,7 +4,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createPembayaranLabel">Masukkan Pembayaran</h5>
+                <h5 class="modal-title" id="createPembayaranLabel">Masukkan Pemasukan</h5>
             </div>
             <div class="modal-body">
                 @if ($tagihan == 0)

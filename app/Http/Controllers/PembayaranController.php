@@ -64,7 +64,7 @@ class PembayaranController extends Controller
         $this->convertNominal($request);
         $request['tagihan'] = preg_replace('/\h*\.+\h*(?!.*\.)/', '', $request->tagihan); // Menghilangkan dots.
 
-        // Upload Bukti Pembayaran Pembayaran
+        // Upload Bukti Pembayaran
         $image = $request->file('bukti');
         $image->storeAs('public/bukti_pembayaran/', $image->hashName());
 
@@ -95,10 +95,5 @@ class PembayaranController extends Controller
         $pembayaran->delete();
         File::delete(public_path('storage/bukti_pembayaran/' . $pembayaran->bukti));
         return redirect()->route('pembayaran.index')->with('delete', 'Pembayaran berhasil dihapus');
-    }
-
-    public function out_index()
-    {
-        return view('admin.pengeluaran.index');
     }
 }

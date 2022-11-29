@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('pengeluarans', function (Blueprint $table) {
             $table->id();
+            $table->string('nama');
+            $table->string('nominal');
+            $table->string('bulan')->nullable();
+            $table->string('tahun')->nullable();
+            $table->string('bukti')->nullable();
+            $table->string('tanggal');
             $table->timestamps();
         });
     }
