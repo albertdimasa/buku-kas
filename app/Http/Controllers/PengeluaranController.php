@@ -17,11 +17,11 @@ class PengeluaranController extends Controller
     public function index()
     {
         $items                  = Pengeluaran::latest()->get();
-        $bulan_lalu             = now()->subMonth()->isoFormat('MMMM');
+        $bulan_ini             = now()->isoFormat('MMMM');
 
-        $pengeluaran_bulan_ini  = Pengeluaran::where('bulan', $bulan_lalu)->sum('nominal');
+        $pengeluaran_bulan_ini  = Pengeluaran::where('bulan', $bulan_ini)->sum('nominal');
         $total_bulan_ini        = Pengeluaran::count();
-        return view('admin.pengeluaran.index', compact('items', 'total_bulan_ini', 'pengeluaran_bulan_ini'));
+        return view('admin.pengeluaran.index', compact('items', 'total_bulan_ini', 'pengeluaran_bulan_ini', 'bulan_ini'));
     }
 
     // public function create()

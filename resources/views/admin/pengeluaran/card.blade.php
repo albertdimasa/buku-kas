@@ -3,7 +3,7 @@
         <div class="info-box bg-gradient-danger">
             <span class="info-box-icon"><i class="fas fa-money-bill-wave"></i></span>
             <div class="info-box-content">
-                <span class="info-box-text">Pengeluaran {{ now()->subMonth()->isoFormat('MMMM Y') }}</span>
+                <span class="info-box-text">Pengeluaran {{ $bulan_ini }}</span>
                 <span class="info-box-number">Rp @rupiah($pengeluaran_bulan_ini)</span>
             </div>
         </div>

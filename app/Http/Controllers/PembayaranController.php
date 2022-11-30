@@ -31,7 +31,6 @@ class PembayaranController extends Controller
             $tagihan = 0;
         }
 
-
         // Cek apakah tagihan null
         $total_bulan_ini     = Pembayaran::where('bulan', $bulan_lalu)->sum('nominal');
         $pekerja_belum_bayar = Pekerja::whereNotIn('id_absen', Pembayaran::where('bulan', $bulan_lalu)->pluck('id_absen'))->count();
