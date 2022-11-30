@@ -18,7 +18,8 @@ class PengeluaranController extends Controller
     {
         $items                  = Pengeluaran::latest()->get();
         $bulan_lalu             = now()->subMonth()->isoFormat('MMMM');
-        $pengeluaran_bulan_ini  = Pengeluaran::whereMonth('created_at', $bulan_lalu)->sum('nominal');
+
+        $pengeluaran_bulan_ini  = Pengeluaran::where('bulan', $bulan_lalu)->sum('nominal');
         $total_bulan_ini        = Pengeluaran::count();
         return view('admin.pengeluaran.index', compact('items', 'total_bulan_ini', 'pengeluaran_bulan_ini'));
     }

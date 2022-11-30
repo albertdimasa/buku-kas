@@ -20,7 +20,7 @@
             <div class="info-box bg-gradient-info">
                 <span class="info-box-icon"><i class="fas fa-exclamation"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Total Saldo</span>
+                    <span class="info-box-text">Saldo Akhir</span>
                     <span class="info-box-number">Rp. @rupiah($saldo)</span>
                 </div>
             </div>
@@ -29,7 +29,7 @@
             <div class="info-box bg-gradient-success">
                 <span class="info-box-icon"><i class="fas fa-money-bill-wave"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Pemasukan Kas</span>
+                    <span class="info-box-text">Total Kas Masuk</span>
                     <span class="info-box-number">Rp. @rupiah($total_pemasukan)</span>
                 </div>
             </div>
@@ -38,7 +38,7 @@
             <div class="info-box bg-gradient-danger">
                 <span class="info-box-icon"><i class="fas fa-exclamation"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Pengeluaran Kas</span>
+                    <span class="info-box-text">Total Kas Keluar</span>
                     <span class="info-box-number">Rp. @rupiah($total_pengeluaran)</span>
                 </div>
             </div>
@@ -49,7 +49,6 @@
     <div class="card card-indigo">
         <div class="card-header">
             <h3 class="card-title">Kas Tahun Ini</h3>
-
             {{-- <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>

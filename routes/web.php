@@ -1,22 +1,12 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PekerjaController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\TagihanController;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -28,4 +18,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('kas/pembayaran', PembayaranController::class);
     Route::resource('kas/pengeluaran', PengeluaranController::class);
     Route::resource('kas/tagihan', TagihanController::class);
+    // Route::post('laporan/{tahun}', [LaporanController::class, 'index'])->name('laporan.index');
 });

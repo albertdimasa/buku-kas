@@ -7,6 +7,8 @@
     <script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
     <script>
         $(function() {
+            let tahun = $('#filter_report').val();
+
             $('#table').DataTable({
                 // "paging": true,
                 // "lengthChange": false,
@@ -23,6 +25,24 @@
                 "scrollY": '200px',
                 "scrollCollapse": true,
             });
+
+            const table = $('#table_report').DataTable({
+                "autoWidth": false,
+                "responsive": true,
+                "ajax": {
+                    url: "{{ url('') }}/laporan/{{ $tahun }}",
+                    type: "POST",
+                    data: function(d) {
+                        d.tahun = tahun;
+                        return d;
+                    }
+                }
+            });
+
+            $('#filter_report').on('change', function() {
+                tahun = $('#filter_report').val();
+                table.ajax.reload(null, false)
+            })
         })
     </script>
 @endpush

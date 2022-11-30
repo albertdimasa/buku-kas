@@ -2,11 +2,8 @@
 
 namespace App\Traits;
 
-use Illuminate\Validation\Rule as ValidationRule;
-
 trait Convert
 {
-
     public function convertNominal($request)
     {
         while (str_contains($request->nominal, '.')) {
