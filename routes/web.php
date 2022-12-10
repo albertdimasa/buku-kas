@@ -18,5 +18,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('kas/pembayaran', PembayaranController::class);
     Route::resource('kas/pengeluaran', PengeluaranController::class);
     Route::resource('kas/tagihan', TagihanController::class);
-    // Route::post('laporan/{tahun}', [LaporanController::class, 'index'])->name('laporan.index');
+    Route::get('laporan', [LaporanController::class, 'index'])->name('laporan.index');
+    Route::post('laporan', [LaporanController::class, 'load_table'])->name('laporan.table');
 });
