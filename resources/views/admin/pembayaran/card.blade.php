@@ -13,7 +13,7 @@
             <span class="info-box-icon"><i class="fas fa-exclamation"></i></span>
             <div class="info-box-content">
                 <span class="info-box-text">Belum Membayar</span>
-                <span class="info-box-number">{{ $pekerja_belum_bayar }} Orang</span>
+                <span class="info-box-number">{{ $total_pekerja_belum_bayar }} Orang</span>
             </div>
         </div>
     </div>

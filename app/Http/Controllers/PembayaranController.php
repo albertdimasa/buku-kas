@@ -8,6 +8,7 @@ use App\Models\Tagihan;
 use App\Traits\Convert;
 use Illuminate\Http\Request;
 use App\Traits\ValidateInput;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 
 class PembayaranController extends Controller
@@ -22,6 +23,9 @@ class PembayaranController extends Controller
         $bulan      = array('Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember');
         $bulan_lalu = now()->subMonth()->isoFormat('MMMM');
 
+        $bulan_dipilih = Carbon::now()->monthName;
+        $tahun_dipilih = date('Y');
+
         try {
             $tagihan    = Tagihan::where([
                 ['bulan', $bulan_lalu],
@@ -33,8 +37,38 @@ class PembayaranController extends Controller
 
         // Cek apakah tagihan null
         $total_bulan_ini     = Pembayaran::where('bulan', $bulan_lalu)->sum('nominal');
-        $pekerja_belum_bayar = Pekerja::whereNotIn('id_absen', Pembayaran::where('bulan', $bulan_lalu)->pluck('id_absen'))->count();
-        return view('admin.pembayaran.index', compact('items', 'pekerja', 'bulan', 'total_bulan_ini', 'pekerja_belum_bayar', 'tagihan'));
+        $pekerja_belum_bayar = Pekerja::whereNotIn('id_absen', Pembayaran::where('bulan', $bulan_lalu)->pluck('id_absen'))->get();
+        $total_pekerja_belum_bayar = $pekerja_belum_bayar->count();
+        return view('admin.pembayaran.index', compact('items', 'pekerja', 'bulan', 'total_bulan_ini', 'total_pekerja_belum_bayar', 'tagihan', 'bulan_dipilih', 'tahun_dipilih'));
+    }
+
+    public function load_belum_bayar(Request $request)
+    {
+        // Jika tahun tidak dipilih maka default adalah tahun saat ini
+        if (request()->input("tahun_dipilih") != null) {
+            $tahun = $request->tahun_dipilih;
+        } else {
+            $tahun = date('Y');
+        }
+
+        // Jika bulan tidak dipilih maka default adalah bulan saat ini
+        if (request()->input("bulan_dipilih") != null) {
+            $bulan = $request->bulan_dipilih;
+        } else {
+            $bulan = Carbon::now()->monthName;
+        }
+
+        $data = Pekerja::whereNotIn('id_absen', Pembayaran::where([
+            ['bulan', $bulan],
+            ['tahun', $tahun]
+        ])->pluck('id_absen'))->get();
+
+        return response()->json([
+            "draw"              => $request->draw,
+            "recordsTotal"      => count($data),
+            "recordsFiltered"   => count($data),
+            'data' => $data,
+        ]);
     }
 
     public function create()

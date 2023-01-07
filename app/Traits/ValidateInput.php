@@ -48,4 +48,14 @@ trait ValidateInput
             'tanggal'   => 'required'
         ]);
     }
+
+    public function validateUser($request)
+    {
+        return $this->validate($request, [
+            'name'      => 'required',
+            'username'  => 'required|unique:users,username',
+            'email'     => 'required|email|unique:users,email',
+            'password'  => 'required|confirmed',
+        ]);
+    }
 }

@@ -44,104 +44,75 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('pekerja.index') }}"
-                        class="nav-link {{ Route::is('pekerja.index') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>
-                            Pekerja
-                        </p>
-                    </a>
-                </li>
-                <li
-                    class="nav-item {{ Route::is('pembayaran.index') | Route::is('tagihan.index') | Route::is('pengeluaran.index') ? 'menu-is-opening menu-open' : '' }} ">
-                    <a href="#"
-                        class="nav-link {{ Route::is('pembayaran.index') | Route::is('tagihan.index') | Route::is('pengeluaran.index') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-money-bill-wave"></i>
-                        <p>
-                            Kas
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('pembayaran.index') }}"
-                                class="nav-link {{ Route::is('pembayaran.index') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-donate"></i>
-                                <p>
-                                    Pemasukan
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('pengeluaran.index') }}"
-                                class="nav-link {{ Route::is('pengeluaran.index') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-gift"></i>
-                                <p>
-                                    Pengeluaran
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('tagihan.index') }}"
-                                class="nav-link {{ Route::is('tagihan.index') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-bell"></i>
-                                <p>
-                                    Tagihan
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('laporan.index') }}"
-                        class="nav-link {{ Route::is('laporan.index') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-file"></i>
-                        <p>
-                            Laporan
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link ">
-                        <i class="nav-icon fas fa-user"></i>
-                        <p>
-                            Pengguna
-                        </p>
-                    </a>
-                </li>
-                {{-- <li class="nav-item menu-open">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            Kas
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link ">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Active Page</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Inactive Page</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li> --}}
-                {{-- <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Simple Link
-                            <span class="right badge badge-danger">New</span>
-                        </p>
-                    </a>
-                </li> --}}
+                @role('admin')
+                    <li class="nav-item">
+                        <a href="{{ route('pekerja.index') }}"
+                            class="nav-link {{ Route::is('pekerja.index') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>
+                                Pekerja
+                            </p>
+                        </a>
+                    </li>
+                    <li
+                        class="nav-item {{ Route::is('pembayaran.index') | Route::is('tagihan.index') | Route::is('pengeluaran.index') ? 'menu-is-opening menu-open' : '' }} ">
+                        <a href="#"
+                            class="nav-link {{ Route::is('pembayaran.index') | Route::is('tagihan.index') | Route::is('pengeluaran.index') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-money-bill-wave"></i>
+                            <p>
+                                Kas
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('pembayaran.index') }}"
+                                    class="nav-link {{ Route::is('pembayaran.index') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-donate"></i>
+                                    <p>
+                                        Pemasukan
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('pengeluaran.index') }}"
+                                    class="nav-link {{ Route::is('pengeluaran.index') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-gift"></i>
+                                    <p>
+                                        Pengeluaran
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('tagihan.index') }}"
+                                    class="nav-link {{ Route::is('tagihan.index') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-bell"></i>
+                                    <p>
+                                        Tagihan
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('laporan.index') }}"
+                            class="nav-link {{ Route::is('laporan.index') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-file"></i>
+                            <p>
+                                Laporan
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('pengguna.index') }}"
+                            class="nav-link {{ Route::is('pengguna.index') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>
+                                Pengguna
+                            </p>
+                        </a>
+                    </li>
+                @endrole
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
