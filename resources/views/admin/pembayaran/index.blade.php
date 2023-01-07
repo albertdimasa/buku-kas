@@ -17,9 +17,8 @@
                 <tr>
                     <th>ID Absen</th>
                     <th>Nama</th>
-                    <th>Tagihan</th>
-                    <th>Nominal Bayar</th>
-                    <th>Tanggal</th>
+                    <th>Nominal</th>
+                    <th>Tanggal Pembayaran</th>
                     <th>Bulan</th>
                     <th>Bukti</th>
                     <th>Action</th>
@@ -30,10 +29,9 @@
                     <tr>
                         <td>{{ $item->id_absen }}</td>
                         <td class="text-capitalize">{{ $item->nama }}</td>
-                        <td>@rupiah($item->tagihan)</td>
                         <td>@rupiah($item->nominal)</td>
                         <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d F Y') }}</td>
-                        <td>{{ $item->bulan }}</td>
+                        <td>{{ $item->bulan }} {{ $item->tahun }}</td>
                         <td>
                             <a href="{{ asset('storage/bukti_pembayaran/' . $item->bukti) }}" type="button"
                                 class="btn btn-warning btn-sm" target="_blank">
@@ -55,33 +53,33 @@
 
     {{-- Elemen 2 --}}
     <div class="card p-2">
-        <button class="btn btn-danger py-3 my-2 text-bold text-uppercase">
-            <i class="fas fa-exclamation mr-2"></i>
-            Ada {{ $total_pekerja_belum_bayar }} Orang yang belum membayar pada Bulan
-            {{ now()->subMonth()->isoFormat('MMMM Y') }}
+        <button class="btn btn-danger py-3 my-2 text-bold text-uppercase" id="total_belum_bayar">
+            <i class="fas fa-exclamation mr-2"></i> Pilih Bulan dan Tahun Terlebih Dahulu
             <i class="fas fa-exclamation ml-2"></i>
         </button>
         <div class="row py-3">
             <div class="col-md-3 mr-auto">
                 <select class="form-control select2-normal" id="bulan_dipilih" name="bulan_dipilih">
-                    <option value="Januari" @if ($bulan_dipilih == 'Januari') selected @endif>Januari</option>
-                    <option value="Februari" @if ($bulan_dipilih == 'Februari') selected @endif>Februari</option>
-                    <option value="Maret" @if ($bulan_dipilih == 'Maret') selected @endif>Maret</option>
-                    <option value="April" @if ($bulan_dipilih == 'April') selected @endif>April</option>
-                    <option value="Mei" @if ($bulan_dipilih == 'Mei') selected @endif>Mei</option>
-                    <option value="Juni" @if ($bulan_dipilih == 'Juni') selected @endif>Juni</option>
-                    <option value="Juli" @if ($bulan_dipilih == 'Juli') selected @endif>Juli</option>
-                    <option value="Agustus" @if ($bulan_dipilih == 'Agustus') selected @endif>Agustus</option>
-                    <option value="September" @if ($bulan_dipilih == 'September') selected @endif>September</option>
-                    <option value="Oktober" @if ($bulan_dipilih == 'Oktober') selected @endif>Oktober</option>
-                    <option value="November" @if ($bulan_dipilih == 'November') selected @endif>November</option>
-                    <option value="Desember" @if ($bulan_dipilih == 'Desember') selected @endif>Desember</option>
+                    <option selected disabled>Pilih Bulan</option>
+                    <option value="Januari">Januari</option>
+                    <option value="Februari">Februari</option>
+                    <option value="Maret">Maret</option>
+                    <option value="April">April</option>
+                    <option value="Mei">Mei</option>
+                    <option value="Juni">Juni</option>
+                    <option value="Juli">Juli</option>
+                    <option value="Agustus">Agustus</option>
+                    <option value="September">September</option>
+                    <option value="Oktober">Oktober</option>
+                    <option value="November">November</option>
+                    <option value="Desember">Desember</option>
                 </select>
             </div>
             <div class="col-md-3">
                 <select class="form-control select2-normal" id="tahun_dipilih" name="tahun_dipilih">
-                    <option value="2022" @if ($tahun_dipilih == '2022') selected @endif>2022</option>
-                    <option value="2023" @if ($tahun_dipilih == '2023') selected @endif>2023</option>
+                    <option selected disabled>Pilih Tahun</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
                 </select>
             </div>
         </div>
@@ -97,6 +95,74 @@
             </tbody>
         </table>
     </div>
+
+    @push('js')
+        <script>
+            let tahun_dipilih = $('#tahun_dipilih').val();
+            let bulan_dipilih = $('#bulan_dipilih').val();
+            let bulan_id = {!! json_encode($bulan) !!};
+
+            // Table Daftar Orang Yang Belum Bayar
+            const table_orang = $('#table_orang').DataTable({
+                columnDefs: [{
+                    "defaultContent": "-",
+                    "targets": "_all"
+                }],
+                "paging": false,
+                "responsive": true,
+                "scrollY": '300px',
+                "processing": true,
+                "serverSide": true,
+                "searching": false,
+                "ordering": false,
+                "dom": 'lBftip',
+                "buttons": [
+                    'excel'
+                ],
+                "ajax": {
+                    url: "{{ route('pembayaran.table') }}",
+                    type: "POST",
+                    data: function(d) {
+                        d._token = "{{ csrf_token() }}";
+                        d.bulan_dipilih = bulan_dipilih;
+                        d.tahun_dipilih = tahun_dipilih;
+                        return d;
+                    },
+                },
+                "columns": [{
+                        "render": function(data, type, row, meta) {
+                            return row.id_absen
+                        }
+                    },
+                    {
+                        "render": function(data, type, row, meta) {
+                            return row.nama.toUpperCase()
+                        }
+                    },
+                ]
+            });
+
+            $("#tahun_dipilih").on('change', function() {
+                tahun_dipilih = $('#tahun_dipilih').val();
+                table_orang.ajax.reload(null, false);
+                if (bulan_dipilih != null) {
+                    $("#total_belum_bayar").html('Ada ' + table_orang.ajax.json().recordsFiltered +
+                        ' Orang yang belum membayar pada Bulan ' + bulan_dipilih + ' ' +
+                        tahun_dipilih);
+                }
+            });
+
+            $("#bulan_dipilih").on('change', function() {
+                bulan_dipilih = $('#bulan_dipilih').val();
+                table_orang.ajax.reload(null, false);
+                if (tahun_dipilih != null) {
+                    $("#total_belum_bayar").html('Ada ' + table_orang.ajax.json().recordsFiltered +
+                        ' Orang yang belum membayar pada Bulan ' + bulan_dipilih + ' ' +
+                        tahun_dipilih);
+                }
+            });
+        </script>
+    @endpush
 @stop
 
 @include('admin.function.datatables')

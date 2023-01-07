@@ -22,14 +22,15 @@ class PembayaranController extends Controller
         $pekerja    = Pekerja::select('id_absen', 'nama')->get();
         $bulan      = array('Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember');
         $bulan_lalu = now()->subMonth()->isoFormat('MMMM');
-
-        $bulan_dipilih = Carbon::now()->monthName;
-        $tahun_dipilih = date('Y');
+        $tahun      = now()->isoFormat('Y');
 
         try {
+            if ($bulan_lalu == 'Desember') {
+                $tahun = $tahun - 1;
+            }
             $tagihan    = Tagihan::where([
                 ['bulan', $bulan_lalu],
-                ['tahun', now()->isoFormat('Y')]
+                ['tahun', $tahun]
             ])->first()->nominal;
         } catch (\Throwable $th) {
             $tagihan = 0;
@@ -39,7 +40,7 @@ class PembayaranController extends Controller
         $total_bulan_ini     = Pembayaran::where('bulan', $bulan_lalu)->sum('nominal');
         $pekerja_belum_bayar = Pekerja::whereNotIn('id_absen', Pembayaran::where('bulan', $bulan_lalu)->pluck('id_absen'))->get();
         $total_pekerja_belum_bayar = $pekerja_belum_bayar->count();
-        return view('admin.pembayaran.index', compact('items', 'pekerja', 'bulan', 'total_bulan_ini', 'total_pekerja_belum_bayar', 'tagihan', 'bulan_dipilih', 'tahun_dipilih'));
+        return view('admin.pembayaran.index', compact('items', 'pekerja', 'bulan', 'total_bulan_ini', 'total_pekerja_belum_bayar', 'tagihan'));
     }
 
     public function load_belum_bayar(Request $request)
@@ -63,11 +64,13 @@ class PembayaranController extends Controller
             ['tahun', $tahun]
         ])->pluck('id_absen'))->get();
 
+        $total = Pekerja::all();
+
         return response()->json([
             "draw"              => $request->draw,
-            "recordsTotal"      => count($data),
+            "recordsTotal"      => count($total),
             "recordsFiltered"   => count($data),
-            'data' => $data,
+            'data'              => $data,
         ]);
     }
 
