@@ -6,13 +6,15 @@
     {{-- Elemen 1 --}}
     @include('admin.pembayaran.card')
     <div class="card p-2">
-        <button type="button" class="btn btn-primary btn-sm d-block my-2 ml-auto" data-toggle="modal"
-            data-target="#createPembayaran">
-            Masukkan Pemasukan
-        </button>
-        @include('admin.pembayaran.create')
-        @include('admin.function.alert')
-        <table id="table" class="table table-bordered table-hover bg-white">
+        @role('admin')
+            <button type="button" class="btn btn-primary btn-sm d-block my-2 ml-auto" data-toggle="modal"
+                data-target="#createPembayaran">
+                Masukkan Pemasukan
+            </button>
+            @include('admin.pembayaran.create')
+            @include('admin.function.alert')
+        @endrole
+        <table id="table-excel" class="table table-bordered table-hover bg-white">
             <thead>
                 <tr>
                     <th>ID Absen</th>
@@ -21,7 +23,9 @@
                     <th>Tanggal Pembayaran</th>
                     <th>Bulan</th>
                     <th>Bukti</th>
-                    <th>Action</th>
+                    @role('admin')
+                        <th>Action</th>
+                    @endrole
                 </tr>
             </thead>
             <tbody>
@@ -38,64 +42,66 @@
                                 Lihat Disini
                             </a>
                         </td>
-                        <td>
-                            <button class="btn btn-sm btn-danger" data-toggle="modal"
-                                data-target="#deletePembayaran-{{ $item->id }}">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                            @include('admin.pembayaran.delete')
-                        </td>
+                        @role('admin')
+                            <td>
+                                <button class="btn btn-sm btn-danger" data-toggle="modal"
+                                    data-target="#deletePembayaran-{{ $item->id }}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                                @include('admin.pembayaran.delete')
+                            </td>
+                        @endrole
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+    @role('admin')
+        {{-- Elemen 2 --}}
+        <div class="card p-2">
+            <button class="btn btn-danger py-3 my-2 text-bold text-uppercase" id="total_belum_bayar">
+                <i class="fas fa-exclamation mr-2"></i> Pilih Bulan dan Tahun Terlebih Dahulu
+                <i class="fas fa-exclamation ml-2"></i>
+            </button>
+            <div class="row py-3">
+                <div class="col-md-3 mr-auto">
+                    <select class="form-control select2-normal" id="bulan_dipilih" name="bulan_dipilih">
+                        <option selected disabled>Pilih Bulan</option>
+                        <option value="Januari">Januari</option>
+                        <option value="Februari">Februari</option>
+                        <option value="Maret">Maret</option>
+                        <option value="April">April</option>
+                        <option value="Mei">Mei</option>
+                        <option value="Juni">Juni</option>
+                        <option value="Juli">Juli</option>
+                        <option value="Agustus">Agustus</option>
+                        <option value="September">September</option>
+                        <option value="Oktober">Oktober</option>
+                        <option value="November">November</option>
+                        <option value="Desember">Desember</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control select2-normal" id="tahun_dipilih" name="tahun_dipilih">
+                        <option selected disabled>Pilih Tahun</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                    </select>
+                </div>
+            </div>
+            <table id="table_orang" class="table table-bordered table-hover bg-white">
+                <thead>
+                    <tr>
+                        <th>ID Absen</th>
+                        <th>Nama</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-    {{-- Elemen 2 --}}
-    <div class="card p-2">
-        <button class="btn btn-danger py-3 my-2 text-bold text-uppercase" id="total_belum_bayar">
-            <i class="fas fa-exclamation mr-2"></i> Pilih Bulan dan Tahun Terlebih Dahulu
-            <i class="fas fa-exclamation ml-2"></i>
-        </button>
-        <div class="row py-3">
-            <div class="col-md-3 mr-auto">
-                <select class="form-control select2-normal" id="bulan_dipilih" name="bulan_dipilih">
-                    <option selected disabled>Pilih Bulan</option>
-                    <option value="Januari">Januari</option>
-                    <option value="Februari">Februari</option>
-                    <option value="Maret">Maret</option>
-                    <option value="April">April</option>
-                    <option value="Mei">Mei</option>
-                    <option value="Juni">Juni</option>
-                    <option value="Juli">Juli</option>
-                    <option value="Agustus">Agustus</option>
-                    <option value="September">September</option>
-                    <option value="Oktober">Oktober</option>
-                    <option value="November">November</option>
-                    <option value="Desember">Desember</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <select class="form-control select2-normal" id="tahun_dipilih" name="tahun_dipilih">
-                    <option selected disabled>Pilih Tahun</option>
-                    <option value="2022">2022</option>
-                    <option value="2023">2023</option>
-                </select>
-            </div>
+                </tbody>
+            </table>
         </div>
-        <table id="table_orang" class="table table-bordered table-hover bg-white">
-            <thead>
-                <tr>
-                    <th>ID Absen</th>
-                    <th>Nama</th>
-                </tr>
-            </thead>
-            <tbody>
-
-            </tbody>
-        </table>
-    </div>
-
+    @endrole
     @push('js')
         <script>
             let tahun_dipilih = $('#tahun_dipilih').val();

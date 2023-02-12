@@ -1,5 +1,4 @@
 @push('js')
-    
     <script>
         $(function() {
 
@@ -74,6 +73,14 @@
                     minimumFractionDigits: 0
                 }).format(money);
             }
+
+            $('#table-excel').DataTable({
+                "paging": false,
+                "dom": 'lBftip',
+                "buttons": [
+                    'excel'
+                ]
+            })
         })
     </script>
 @endpush

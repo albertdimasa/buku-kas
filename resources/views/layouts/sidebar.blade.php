@@ -44,6 +44,7 @@
                         </p>
                     </a>
                 </li>
+
                 @role('admin')
                     <li class="nav-item">
                         <a href="{{ route('pekerja.index') }}"
@@ -54,6 +55,8 @@
                             </p>
                         </a>
                     </li>
+                @endrole
+                @hasanyrole('admin|user')
                     <li
                         class="nav-item {{ Route::is('pembayaran.index') | Route::is('tagihan.index') | Route::is('pengeluaran.index') ? 'menu-is-opening menu-open' : '' }} ">
                         <a href="#"
@@ -83,17 +86,22 @@
                                     </p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('tagihan.index') }}"
-                                    class="nav-link {{ Route::is('tagihan.index') ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-bell"></i>
-                                    <p>
-                                        Tagihan
-                                    </p>
-                                </a>
-                            </li>
+                            @role('admin')
+                                <li class="nav-item">
+                                    <a href="{{ route('tagihan.index') }}"
+                                        class="nav-link {{ Route::is('tagihan.index') ? 'active' : '' }}">
+                                        <i class="nav-icon fas fa-bell"></i>
+                                        <p>
+                                            Tagihan
+                                        </p>
+                                    </a>
+                                </li>
+                            @endrole
                         </ul>
                     </li>
+                @endrole
+                @role('admin')
+
                     <li class="nav-item">
                         <a href="{{ route('laporan.index') }}"
                             class="nav-link {{ Route::is('laporan.index') ? 'active' : '' }}">

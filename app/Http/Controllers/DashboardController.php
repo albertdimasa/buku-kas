@@ -14,11 +14,11 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $user = auth()->user()->hasRole('admin');
-        if ($user) {
-            return $this->admin();
-        };
-        return view('user.dashboard');
+        // $user = auth()->user()->hasRole('admin');
+        // if ($user) {
+        return $this->admin();
+        // };
+        // return view('user.dashboard');
     }
 
     public function admin()

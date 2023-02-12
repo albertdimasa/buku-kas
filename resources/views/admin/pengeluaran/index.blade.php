@@ -5,13 +5,15 @@
 @section('content')
     @include('admin.pengeluaran.card')
     <div class="card p-2">
-        <button type="button" class="btn btn-primary btn-sm d-block my-2 ml-auto" data-toggle="modal"
-            data-target="#createPengeluaran">
-            Masukkan Pengeluaran
-        </button>
-        @include('admin.pengeluaran.create')
-        @include('admin.function.alert')
-        <table id="table" class="table table-bordered table-hover bg-white">
+        @role('admin')
+            <button type="button" class="btn btn-primary btn-sm d-block my-2 ml-auto" data-toggle="modal"
+                data-target="#createPengeluaran">
+                Masukkan Pengeluaran
+            </button>
+            @include('admin.pengeluaran.create')
+            @include('admin.function.alert')
+        @endrole
+        <table id="table-excel" class="table table-bordered table-hover bg-white">
             <thead>
                 <tr>
                     <th>#</th>
@@ -19,7 +21,9 @@
                     <th>Tanggal</th>
                     <th>Nominal Bayar</th>
                     <th>Bukti</th>
-                    <th>Action</th>
+                    @role('admin')
+                        <th>Action</th>
+                    @endrole
                 </tr>
             </thead>
             <tbody>
@@ -35,13 +39,15 @@
                                 Lihat Disini
                             </a>
                         </td>
-                        <td>
-                            <button class="btn btn-sm btn-danger" data-toggle="modal"
-                                data-target="#deletePengeluaran-{{ $item->id }}">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                            @include('admin.pengeluaran.delete')
-                        </td>
+                        @role('admin')
+                            <td>
+                                <button class="btn btn-sm btn-danger" data-toggle="modal"
+                                    data-target="#deletePengeluaran-{{ $item->id }}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                                @include('admin.pengeluaran.delete')
+                            </td>
+                        @endrole
                     </tr>
                 @endforeach
             </tbody>

@@ -74,11 +74,6 @@ class PembayaranController extends Controller
         ]);
     }
 
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
         $request['nama']    = Pekerja::where('id_absen', $request->id_absen)->first()->nama; // Mendapatkan nama berdasar id absen
@@ -110,20 +105,6 @@ class PembayaranController extends Controller
         ]);
 
         return redirect()->route('pembayaran.index')->with('success', 'Pembayaran berhasil ditambahkan');
-    }
-
-    public function show(Pembayaran $pembayaran)
-    {
-    }
-
-    public function edit(Pembayaran $Pembayaran)
-    {
-        //
-    }
-
-    public function update(Request $request, Pembayaran $Pembayaran)
-    {
-        //
     }
 
     public function destroy(Pembayaran $pembayaran)

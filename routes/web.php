@@ -15,19 +15,15 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'auth',], function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::group(['middleware' => 'role:user',], function () {
-        Route::get('/test', function () {
-            return dd('test');
-        });
-    });
+    Route::apiResource('kas/pembayaran', PembayaranController::class);
+    Route::post('pembayaran/load', [PembayaranController::class, 'load_belum_bayar'])->name('pembayaran.table');
+    Route::apiResource('kas/pengeluaran', PengeluaranController::class);
+
     Route::group(['middleware' => 'role:admin',], function () {
         Route::resource('pekerja', PekerjaController::class);
-        Route::resource('kas/pembayaran', PembayaranController::class);
-        Route::resource('kas/pengeluaran', PengeluaranController::class);
         Route::resource('kas/tagihan', TagihanController::class);
         Route::resource('pengguna', UserController::class);
         Route::resource('laporan', LaporanController::class);
         Route::post('laporan', [LaporanController::class, 'load_table'])->name('laporan.table');
-        Route::post('pembayaran/load', [PembayaranController::class, 'load_belum_bayar'])->name('pembayaran.table');
     });
 });
