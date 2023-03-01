@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PekerjaController;
 use App\Http\Controllers\PembayaranController;
@@ -16,7 +17,8 @@ Route::get('/', function () {
 Route::group(['middleware' => 'auth',], function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::apiResource('kas/pembayaran', PembayaranController::class);
-    Route::post('pembayaran/load', [PembayaranController::class, 'load_belum_bayar'])->name('pembayaran.table');
+    Route::post('pembayaran/index', [PembayaranController::class, 'index_load'])->name('pembayaran.index.load');
+    Route::post('pembayaran/load', [PembayaranController::class, 'belum_bayar_load'])->name('pembayaran.belum_bayar.load');
     Route::apiResource('kas/pengeluaran', PengeluaranController::class);
 
     Route::group(['middleware' => 'role:admin',], function () {
@@ -25,5 +27,8 @@ Route::group(['middleware' => 'auth',], function () {
         Route::resource('pengguna', UserController::class);
         Route::resource('laporan', LaporanController::class);
         Route::post('laporan', [LaporanController::class, 'load_table'])->name('laporan.table');
+
+        // Export
+        Route::post('export-pembayaran', [ExportController::class, 'pembayaran'])->name('pembayaran.export');
     });
 });

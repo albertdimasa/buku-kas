@@ -4,7 +4,7 @@
 @stop
 @section('content')
     @include('admin.pengeluaran.card')
-    <div class="card p-2">
+    <div class="card p-3">
         @role('admin')
             <button type="button" class="btn btn-primary btn-sm d-block my-2 ml-auto" data-toggle="modal"
                 data-target="#createPengeluaran">

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Traits\ValidateInput;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
+use Yajra\DataTables\Facades\DataTables;
 
 class PembayaranController extends Controller
 {
@@ -18,12 +19,14 @@ class PembayaranController extends Controller
 
     public function index()
     {
-        $items      = Pembayaran::latest()->get();
         $pekerja    = Pekerja::select('id_absen', 'nama')->get();
         $bulan      = array('Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember');
-        $bulan_lalu = now()->subMonth()->isoFormat('MMMM');
+
+        // Mendapatkan Tahun Ini
         $tahun      = now()->isoFormat('Y');
 
+        // Mendapatkan Bulan Sebelumnya
+        $bulan_lalu = now()->subMonth()->isoFormat('MMMM');
         try {
             if ($bulan_lalu == 'Desember') {
                 $tahun = $tahun - 1;
@@ -36,42 +39,71 @@ class PembayaranController extends Controller
             $tagihan = 0;
         }
 
-        // Cek apakah tagihan null
-        $total_bulan_ini     = Pembayaran::where('bulan', $bulan_lalu)->sum('nominal');
-        $pekerja_belum_bayar = Pekerja::whereNotIn('id_absen', Pembayaran::where('bulan', $bulan_lalu)->pluck('id_absen'))->get();
-        $total_pekerja_belum_bayar = $pekerja_belum_bayar->count();
-        return view('admin.pembayaran.index', compact('items', 'pekerja', 'bulan', 'total_bulan_ini', 'total_pekerja_belum_bayar', 'tagihan'));
+        // Kebutuhan Info Card
+        $total_bulan_ini     = Pembayaran::where([
+            ['bulan', $bulan_lalu],
+            ['tahun', $tahun]
+        ])->sum('nominal');
+        $total_pekerja_belum_bayar = Pekerja::whereNotIn('id_absen', Pembayaran::where('bulan', $bulan_lalu)->pluck('id_absen'))->count();
+        return view('admin.pembayaran.index', compact('bulan', 'total_bulan_ini', 'total_pekerja_belum_bayar', 'pekerja', 'tagihan'));
     }
 
-    public function load_belum_bayar(Request $request)
+    public function index_load(Request $request)
+    {
+        $tahun = $request->tahun;
+        $bulan = $request->bulan;
+
+        // Table Pembayaran
+        if (request()->ajax()) {
+            $data = Pembayaran::orderBy('created_at', 'DESC');
+
+            // Jika Bulan Dipilih / Tidak Kosong
+            if ($bulan != null && $tahun != null) {
+                $data = $data->where([
+                    ['bulan', $bulan],
+                    ['tahun', $tahun]
+                ]);
+            }
+
+            return DataTables::of($data)
+                ->editColumn('nama', function ($value) {
+                    return ucfirst($value->nama);
+                })
+                ->editColumn('nominal', function ($value) {
+                    return 'Rp' . number_format($value->nominal, 0, '.', '.');
+                })
+                ->editColumn('tanggal', function ($value) {
+                    return date("j F Y", strtotime($value->tanggal));
+                })->make();
+        }
+    }
+
+
+    public function belum_bayar_load(Request $request)
     {
         // Jika tahun tidak dipilih maka default adalah tahun saat ini
         if (request()->input("tahun_dipilih") != null) {
             $tahun = $request->tahun_dipilih;
         } else {
-            $tahun = date('Y');
+            $tahun = '';
         }
 
         // Jika bulan tidak dipilih maka default adalah bulan saat ini
         if (request()->input("bulan_dipilih") != null) {
             $bulan = $request->bulan_dipilih;
-        } else {
-            $bulan = Carbon::now()->monthName;
-        }
+            } else {
+                $bulan = '';
+            }
 
         $data = Pekerja::whereNotIn('id_absen', Pembayaran::where([
             ['bulan', $bulan],
             ['tahun', $tahun]
-        ])->pluck('id_absen'))->get();
+        ])->pluck('id_absen'));
 
-        $total = Pekerja::all();
-
-        return response()->json([
-            "draw"              => $request->draw,
-            "recordsTotal"      => count($total),
-            "recordsFiltered"   => count($data),
-            'data'              => $data,
-        ]);
+        return DataTables::of($data)
+            ->editColumn('nama', function ($value) {
+                return ucfirst($value->nama);
+            })->make();
     }
 
     public function store(Request $request)
