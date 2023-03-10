@@ -12,6 +12,44 @@
             </button>
             @include('admin.pengeluaran.create')
             @include('admin.function.alert')
+            <div class="row py-3">
+                <div class="col-md-2">
+                    <select class="form-control select2-normal" name="bulan_bayar" id="bulan_bayar">
+                        <option selected disabled>Pilih Bulan</option>
+                        <option value="Januari">Januari</option>
+                        <option value="Februari">Februari</option>
+                        <option value="Maret">Maret</option>
+                        <option value="April">April</option>
+                        <option value="Mei">Mei</option>
+                        <option value="Juni">Juni</option>
+                        <option value="Juli">Juli</option>
+                        <option value="Agustus">Agustus</option>
+                        <option value="September">September</option>
+                        <option value="Oktober">Oktober</option>
+                        <option value="November">November</option>
+                        <option value="Desember">Desember
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-control select2-normal" name="tahun_bayar" id="tahun_bayar">
+                        <option selected disabled>Pilih Tahun</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                    </select>
+                </div>
+                <div class="col-md-2 my-auto">
+                    <form action="{{ route('pembayaran.export') }}" method="post" id="ExportPembayaran">
+                        @csrf
+                        <input type="hidden" name="bulan" id="bulan_export">
+                        <input type="hidden" name="tahun" id="tahun_export">
+                        <button type="submit" class="btn btn-success btn-sm">
+                            Export Excel
+                        </button>
+                    </form>
+                </div>
+            </div>
         @endrole
         <table id="table-excel" class="table table-bordered table-hover bg-white">
             <thead>
@@ -21,13 +59,10 @@
                     <th>Tanggal</th>
                     <th>Nominal Bayar</th>
                     <th>Bukti</th>
-                    @role('admin')
-                        <th>Action</th>
-                    @endrole
                 </tr>
             </thead>
             <tbody>
-                @foreach ($items as $item)
+                {{-- @foreach ($items as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td class="text-capitalize">{{ $item->nama }}</td>
@@ -49,7 +84,7 @@
                             </td>
                         @endrole
                     </tr>
-                @endforeach
+                @endforeach --}}
             </tbody>
         </table>
     </div>

@@ -38,7 +38,6 @@ class PembayaranExport implements FromCollection, WithHeadings, ShouldAutoSize
             'Bulan',
             'Tahun',
             'Tanggal Pembayaran',
-
         ];
     }
 }

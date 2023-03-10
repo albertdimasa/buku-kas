@@ -41,7 +41,7 @@
                     </select>
                 </div>
                 <div class="col-md-2 my-auto">
-                    <form action="{{ route('pembayaran.export') }}" method="post" id="ExportPembayaran">
+                    <form action="{{ route('pembayaran.export') }}" method="post">
                         @csrf
                         <input type="hidden" name="bulan" id="bulan_export">
                         <input type="hidden" name="tahun" id="tahun_export">
@@ -129,11 +129,11 @@
                     </select>
                 </div>
                 <div class="col-md-2 my-auto">
-                    <form action="{{ route('pembayaran.export') }}" method="post" id="ExportPembayaran">
+                    <form action="{{ route('pembayaran-belum-bayar.export') }}" method="post">
                         @csrf
                         <input type="hidden" name="bulan" id="bulan_belum_bayar_export">
                         <input type="hidden" name="tahun" id="tahun_belum_bayar_export">
-                        <button type="submit" class="btn btn-success btn-sm">
+                        <button type="submit" id="btn_export" class="btn btn-success btn-sm" disabled>
                             Export Excel
                         </button>
                     </form>
@@ -210,6 +210,7 @@
                 table_pembayaran.ajax.reload(null, false);
             });
         </script>
+        {{-- Elemen 2 --}}
         <script>
             let tahun_dipilih = $('#tahun_dipilih').val();
             let bulan_dipilih = $('#bulan_dipilih').val();
@@ -240,16 +241,24 @@
                 ]
             });
 
+            function isSelected() {
+                if (tahun_dipilih != null && bulan_dipilih != null) {
+                    $('#btn_export').prop('disabled', false);
+                }
+            }
+
             $("#tahun_dipilih").on('change', function() {
                 tahun_dipilih = $('#tahun_dipilih').val();
-                $('#tahun_belum_bayar_export').val(bulan);
+                $('#tahun_belum_bayar_export').val(tahun_dipilih);
                 table_orang.ajax.reload(null, false);
+                isSelected();
             });
 
             $("#bulan_dipilih").on('change', function() {
                 bulan_dipilih = $('#bulan_dipilih').val();
-                $('#bulan_belum_bayar_export').val(bulan);
+                $('#bulan_belum_bayar_export').val(bulan_dipilih);
                 table_orang.ajax.reload(null, false);
+                isSelected();
             });
         </script>
     @endpush

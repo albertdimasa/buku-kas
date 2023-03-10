@@ -30,5 +30,7 @@ Route::group(['middleware' => 'auth',], function () {
 
         // Export
         Route::post('export-pembayaran', [ExportController::class, 'pembayaran'])->name('pembayaran.export');
+        Route::post('export-pembayaran-belum-bayar', [ExportController::class, 'pembayaran_belum_bayar'])->name('pembayaran-belum-bayar.export');
+        Route::post('export-pengeluaran', [ExportController::class, 'pengeluaran'])->name('pengeluaran.export');
     });
 });

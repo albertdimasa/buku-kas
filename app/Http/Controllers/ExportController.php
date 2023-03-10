@@ -23,6 +23,6 @@ class ExportController extends Controller
      */
     public function pembayaran_belum_bayar(Request $request)
     {
-        return Excel::download(new PembayaranBelumBayarExport($request->bulan, $request->tahun), 'pembayaran_yang_belum_bayar.xlsx');
+        return Excel::download(new PembayaranBelumBayarExport($request->bulan, $request->tahun), 'pembayaran_' . $request->bulan . '_' . $request->tahun . '.xlsx');
     }
 }

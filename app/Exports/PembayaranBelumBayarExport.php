@@ -21,10 +21,7 @@ class PembayaranBelumBayarExport implements FromCollection, WithHeadings, Should
 
     public function collection()
     {
-        if ($this->bulan == null && $this->tahun == null) {
-            return Pekerja::select('id_absen', 'nama')->get();
-        }
-        return Pekerja::whereNotIn('id_absen', Pembayaran::where([
+        return Pekerja::select('id_absen', 'nama')->whereNotIn('id_absen', Pembayaran::where([
             ['bulan', $this->bulan],
             ['tahun', $this->tahun]
         ])->pluck('id_absen'))->get();
