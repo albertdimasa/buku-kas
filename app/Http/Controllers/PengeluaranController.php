@@ -8,6 +8,7 @@ use App\Traits\ValidateInput;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Yajra\DataTables\Facades\DataTables;
 
 class PengeluaranController extends Controller
 {
@@ -24,10 +25,42 @@ class PengeluaranController extends Controller
         return view('admin.pengeluaran.index', compact('items', 'total_bulan_ini', 'pengeluaran_bulan_ini', 'bulan_ini'));
     }
 
-    // public function create()
-    // {
-    //     //
-    // }
+    public function index_load(Request $request)
+    {
+        $tahun = $request->tahun;
+        $bulan = $request->bulan;
+
+        // Table Pembayaran
+        if (request()->ajax()) {
+            $data = Pengeluaran::orderBy('created_at', 'DESC');
+
+            // Jika Bulan Dipilih / Tidak Kosong
+            if ($bulan != null && $tahun != null) {
+                $data = $data->where([
+                    ['bulan', $bulan],
+                    ['tahun', $tahun]
+                ]);
+            }
+
+            return DataTables::of($data)
+                ->editColumn('nama', function ($value) {
+                    return ucfirst($value->nama);
+                })
+                ->editColumn('nominal', function ($value) {
+                    return 'Rp' . number_format($value->nominal, 0, '.', '.');
+                })
+                ->editColumn('tanggal', function ($value) {
+                    return date("j F Y", strtotime($value->tanggal));
+                })
+                // ->editColumn('bukti', function ($value) {
+                //     $btn = `<a href="{{ asset('storage/bukti_pengeluaran/' . $value->bukti) }}" type="button"
+                //     class="btn btn-warning btn-sm" target="_blank">Lihat Disini</a>`;
+                //     return $btn;
+                // })
+                ->rawColumns(['bukti'])
+                ->make();
+        }
+    }
 
     public function store(Request $request)
     {
@@ -50,21 +83,6 @@ class PengeluaranController extends Controller
 
         return redirect()->route('pengeluaran.index')->with('success', 'Pengeluaran berhasil ditambahkan');
     }
-
-    // public function show(Pengeluaran $pengeluaran)
-    // {
-    //     //
-    // }
-
-    // public function edit(Pengeluaran $pengeluaran)
-    // {
-    //     //
-    // }
-
-    // public function update(Request $request, Pengeluaran $pengeluaran)
-    // {
-    //     //
-    // }
 
     public function destroy(Pengeluaran $pengeluaran)
     {

@@ -40,7 +40,7 @@
                     </select>
                 </div>
                 <div class="col-md-2 my-auto">
-                    <form action="{{ route('pembayaran.export') }}" method="post" id="ExportPembayaran">
+                    <form action="{{ route('pengeluaran.export') }}" method="post" id="ExportPembayaran">
                         @csrf
                         <input type="hidden" name="bulan" id="bulan_export">
                         <input type="hidden" name="tahun" id="tahun_export">
@@ -51,10 +51,9 @@
                 </div>
             </div>
         @endrole
-        <table id="table-excel" class="table table-bordered table-hover bg-white">
+        <table id="table_pengeluaran" class="table table-bordered table-hover bg-white">
             <thead>
                 <tr>
-                    <th>#</th>
                     <th>Nama</th>
                     <th>Tanggal</th>
                     <th>Nominal Bayar</th>
@@ -88,6 +87,57 @@
             </tbody>
         </table>
     </div>
+    @push('js')
+        <script>
+            let tahun = $('#tahun_bayar').val();
+            let bulan = $('#bulan_bayar').val();
+
+            const table_pengeluaran = $('#table_pengeluaran').DataTable({
+                processing: true,
+                serverSide: true,
+                responsive: true,
+                ajax: {
+                    url: "{{ route('pengeluaran.index.load') }}",
+                    type: "POST",
+                    data: function(d) {
+                        d._token = "{{ csrf_token() }}";
+                        d.tahun = tahun;
+                        d.bulan = bulan;
+                        return d;
+                    }
+                },
+                columns: [{
+                        data: 'nama',
+                        name: 'nama'
+                    },
+                    {
+                        data: 'tanggal',
+                        name: 'tanggal'
+                    },
+                    {
+                        data: 'nominal',
+                        name: 'nominal'
+                    },
+                    {
+                        data: 'bukti',
+                        data: 'bukti'
+                    }
+                ]
+            });
+
+            $('#tahun_bayar').on('change', function() {
+                tahun = $('#tahun_bayar').val();
+                $('#tahun_export').val(tahun);
+                table_pengeluaran.ajax.reload(null, false);
+            });
+
+            $('#bulan_bayar').on('change', function() {
+                bulan = $('#bulan_bayar').val();
+                $('#bulan_export').val(bulan);
+                table_pengeluaran.ajax.reload(null, false);
+            });
+        </script>
+    @endpush
 @stop
 
 @include('admin.function.datatables')

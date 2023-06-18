@@ -20,6 +20,7 @@ Route::group(['middleware' => 'auth',], function () {
     Route::post('pembayaran/index', [PembayaranController::class, 'index_load'])->name('pembayaran.index.load');
     Route::post('pembayaran/load', [PembayaranController::class, 'belum_bayar_load'])->name('pembayaran.belum_bayar.load');
     Route::apiResource('kas/pengeluaran', PengeluaranController::class);
+    Route::post('pengeluaran/index', [PengeluaranController::class, 'index_load'])->name('pengeluaran.index.load');
 
     Route::group(['middleware' => 'role:admin',], function () {
         Route::resource('pekerja', PekerjaController::class);
